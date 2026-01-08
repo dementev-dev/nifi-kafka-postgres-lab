@@ -137,27 +137,40 @@ select * from ods.samplekafka2postgres order by id desc limit 10;
 
 #### Базовые команды CLI (опционально)
 
-Все команды выполняются через `docker compose exec kafka`:
+> ⚠️ **Важно:** В Apache Kafka 3.8.0 скрипты находятся в `/opt/kafka/bin/`, поэтому нужно указывать полный путь.
 
 **Чтение сообщений:**
 ```sh
-docker compose exec kafka kafka-console-consumer.sh \
+docker compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh \
   --bootstrap-server localhost:9092 \
   --topic Sample2Kafka \
   --from-beginning
 ```
 
 **Запись сообщений:**
+
+**Интерактивный режим** (ввод сообщений вручную):
 ```sh
-docker compose exec kafka kafka-console-producer.sh \
+docker compose exec kafka /opt/kafka/bin/kafka-console-producer.sh \
   --bootstrap-server localhost:9092 \
   --topic Sample2Kafka
 ```
-Пример JSON-сообщения: `{"dttm": 1704698992000, "txt": "Тестовое сообщение"}`
+После запуска введите сообщение и нажмите Enter. Нажмите `Ctrl+C` для выхода.
+
+**Отправка одной командой** (через `echo` и pipe):
+```sh
+echo '{"dttm": 1704698992000, "txt": "Тестовое сообщение"}' | \
+  docker compose exec -T kafka /opt/kafka/bin/kafka-console-producer.sh \
+  --bootstrap-server localhost:9092 \
+  --topic Sample2Kafka
+```
+> 💡 **Примечание:** Флаг `-T` отключает TTY, что позволяет использовать pipe.
 
 **Просмотр списка топиков:**
 ```sh
-docker compose exec kafka kafka-topics.sh --bootstrap-server localhost:9092 --list
+docker compose exec kafka /opt/kafka/bin/kafka-topics.sh \
+  --bootstrap-server localhost:9092 \
+  --list
 ```
 
 ## Примеры flow (шаблоны)
