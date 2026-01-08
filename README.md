@@ -97,6 +97,8 @@ select * from ods.samplekafka2postgres order by id desc limit 10;
 - Из NiFi (внутри Docker): `kafka:29092`
 
 ## Примеры flow (шаблоны)
+Короткий гайд для менти по JSON-версии потоков: `MENTEE_GUIDE_JSON_FLOWS.md`.
+
 В `nifi-templates/` лежат примеры:
 - `Sample2Kafka.json` — публикует JSON-сообщения в Kafka topic `Sample2Kafka`
 - `SampleKafka2Postgres.json` — читает JSON из Kafka topic `Sample2Kafka` и пишет в Postgres (в `stg.samplekafka2postgres`, затем вызывает `ods.load_samplekafka2postgres()`)
