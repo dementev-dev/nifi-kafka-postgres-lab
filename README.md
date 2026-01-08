@@ -98,18 +98,13 @@ select * from ods.samplekafka2postgres order by id desc limit 10;
 
 ## Примеры flow (шаблоны)
 В `nifi-templates/` лежат примеры:
-- `Sample2Kafka.xml` / `Sample2Kafka.json` — публикует сообщения в Kafka topic `Sample2Kafka`
-- `SampleKafka2Postgres.json` — читает из Kafka topic `Sample2Kafka` и пишет в Postgres (в `stg.samplekafka2postgres`, затем вызывает `ods.load_samplekafka2postgres()`)
+- `Sample2Kafka.json` — публикует JSON-сообщения в Kafka topic `Sample2Kafka`
+- `SampleKafka2Postgres.json` — читает JSON из Kafka topic `Sample2Kafka` и пишет в Postgres (в `stg.samplekafka2postgres`, затем вызывает `ods.load_samplekafka2postgres()`)
+- `Sample2Kafka-avro.json` / `SampleKafka2Postgres-avro.json` — Avro-версии потоков
 
 ### Памятка: как импортировать Process Group / Flow в NiFi
 Файлы нужно загружать через браузер с вашей машины (каталог `nifi-templates/`).
 
-**Вариант 1: шаблон `.xml` (Template)**
-1) Откройте NiFi: http://localhost:18443/nifi/
-2) В верхнем меню найдите `Templates` → `Upload Template` → выберите файл `nifi-templates/Sample2Kafka.xml`.
-3) На канвасе: нажмите правой кнопкой мыши → `Instantiate Template` (или иконка Template на панели) → выберите шаблон → разместите process group на канвасе.
-
-**Вариант 2: flow definition `.json`**
 Название пункта может отличаться в зависимости от UI/версии, но смысл один — “загрузить process group/flow definition из файла”:
 1) В верхнем меню найдите действие вроде `Upload` / `Import` / `Process Group` → выберите загрузку из файла.
 2) Выберите `nifi-templates/SampleKafka2Postgres.json` (или `Sample2Kafka.json`) и разместите process group на канвасе.
